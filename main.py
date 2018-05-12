@@ -1,4 +1,5 @@
 import time
+import math
 
 
 def writeOutputFile(inputFilename, contents):
@@ -18,13 +19,21 @@ def readInputFile(inputFilename):
 
 
 # Dvejetainis paieskos metodas (ivestis surusiuota didejimo tvarka ir elementai unikalus)
-def binarySearch(where, what):
-    return where.index(what)  # stub
+def binarySearch(where, what, _offsetCounter=0):
+    centerIdx = int(math.floor(len(where) / 2.))
+    centerElement = where[centerIdx]
+    if centerElement == what:
+        return centerIdx + _offsetCounter
+    elif len(where) == 1:
+        return None
+    elif what < centerElement:
+        return binarySearch(where=where[:centerIdx], what=what, _offsetCounter=_offsetCounter)
+    return binarySearch(where=where[centerIdx+1:], what=what, _offsetCounter=_offsetCounter + centerIdx + 1)
 
 
 if __name__ == "__main__":
     # INPUT
-    inputFilename = "ivestis_10000"
+    inputFilename = "ivestis_1000"
     haystack = readInputFile(inputFilename)
     needle = int(input("Kokio skaiciaus ieskote? "))  # Dialogo pagalba suzinoma, kokio skaiciaus ieskoma
 
@@ -37,7 +46,7 @@ if __name__ == "__main__":
     if foundIdx is None:
         outputContents = "Skaicius nerastas per {} ms".format(duration_us)
     else:
-        outputContents = "Skaicius rastas (indeksuojamoje nuo 0) pozicijoje {} per {} us (=1e-6 s)".format(foundIdx,
-                                                                                                           duration_us)
+        outputContentsTemplate = "Skaicius rastas (indeksuojamoje nuo 0) pozicijoje {} per {} us (=1e-6 s)"
+        outputContents = outputContentsTemplate.format(foundIdx, duration_us)
     print(outputContents)
     writeOutputFile(inputFilename, outputContents)
