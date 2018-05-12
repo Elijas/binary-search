@@ -11,7 +11,9 @@ def readInputFile(inputFilename):
     inputFile = open(inputFilename + ".txt", 'r')  # Atidaromas failas skaitymo rezimu
     inputFileContents = inputFile.read()
     if len(inputFileContents) == 0:  # Jei ivesties failas tuscias, programa - stabdoma
-        writeOutputFile(inputFilename, "Ivesties failas yra tuscias")
+        outputContents = "Ivesties failas yra tuscias"
+        print(outputContents)
+        writeOutputFile(inputFilename, outputContents)
         exit(1)
 
     haystack = [int(n) for n in inputFileContents.split(',')]  # Nuskaitomi duomenys ir sukuriamas skaiciu masyvas
@@ -33,7 +35,7 @@ def binarySearch(where, what, _offsetCounter=0):
 
 if __name__ == "__main__":
     # INPUT
-    inputFilename = "ivestis_1000"
+    inputFilename = "ivestis_10000"
     haystack = readInputFile(inputFilename)  # Skaitomas failas
     needle = int(input("Kokio skaiciaus ieskote? "))  # Dialogo pagalba suzinoma, kokio skaiciaus ieskoma
 
@@ -44,9 +46,9 @@ if __name__ == "__main__":
 
     # OUTPUT
     if foundIdx is None:
-        outputContents = "Skaicius nerastas per {} ms".format(duration_us)
+        outputContents = "Skaicius {} nerastas per {} ms".format(needle, duration_us)
     else:
-        outputContentsTemplate = "Skaicius rastas (indeksuojamoje nuo 0) pozicijoje {} per {} us (=1e-6 s)"
-        outputContents = outputContentsTemplate.format(foundIdx, duration_us)
+        outputContentsTemplate = "Skaicius {} rastas (indeksuojamoje nuo 0) pozicijoje {} per {} us (=1e-6 s)"
+        outputContents = outputContentsTemplate.format(needle, foundIdx, duration_us)
     print(outputContents)
     writeOutputFile(inputFilename, outputContents)  # Isvedami rezultatai i faila

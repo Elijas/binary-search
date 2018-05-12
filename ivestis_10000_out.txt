@@ -1,0 +1,1 @@
+Skaicius 1 rastas (indeksuojamoje nuo 0) pozicijoje 0 per 156.27527178783285 us (=1e-6 s)
